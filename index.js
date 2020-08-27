@@ -25,7 +25,9 @@ app.get('/', function (req, res) {
         settings: billSettings.getSettings(),
         totals: billSettings.totals(),
         totalCallCost: billSettings.getTotalCallCost(),
-        totalSmsCost: billSettings.getTotalSmsCost()
+        totalSmsCost: billSettings.getTotalSmsCost(),
+        totalStyle: billSettings.styleColor()
+
 
     });
 });
@@ -53,9 +55,11 @@ app.get('/actions', function (req, res) {
     res.render('actions', { actions: billSettings.actions() });
 });
 
-app.get('/action/:actiontype', function (req, res) {
+app.get('/actions/:actiontype', function (req, res) {
+    
     const actionType = req.params.actiontype;
-    res.render('actions', { actions: billSettings.actionsfor(actionType) });
+    // console.log(actionType);
+    res.render('actions', { actions: billSettings.actionsFor(actionType) });
 });
 
 const PORT = process.env.PORT || 3011

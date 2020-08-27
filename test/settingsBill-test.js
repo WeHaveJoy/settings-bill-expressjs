@@ -45,7 +45,6 @@ it("It should be able to set the warning level cost", function () {
 });
 
 
-
 it("It should be able to set the Critical level cost", function () {
     let billSettings = SettingsBill();
    
