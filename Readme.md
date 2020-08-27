@@ -1,1 +1,0 @@
-[![Build Status](https://travis-ci.org/WeHaveJoy/settings-bill-expressjs.svg?branch=gh-pages)](https://travis-ci.org/WeHaveJoy/settings-bill-expressjs)
