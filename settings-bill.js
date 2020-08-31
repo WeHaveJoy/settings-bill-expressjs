@@ -1,5 +1,5 @@
-var moment = require('moment');
-moment().format();
+// var moment = require('moment');
+// moment().format();
 module.exports = function () {
 
     let theSettings;
@@ -8,21 +8,11 @@ module.exports = function () {
     // let warningLevel;
     // let criticalLevel;
 
-    let totalCallCost = 0;
-    let totalSmsCost = 0;
+    // let totalCallCost = 0;
+    // let totalSmsCost = 0;
 
     actionsList = [];
-    // function setSmsCost() {
 
-    // }
-
-    // function setCallCost() {
-
-    // }
-
-    // function grandTotal() {
-
-    // }
     function getTotalCallCost() {
         return getTotals("call");
     }
@@ -39,7 +29,6 @@ module.exports = function () {
         // smsCost = smsCost + settings;
         // theWarningLevel = settings;
         // theCriticalLevel = settings;
-
     }
 
     function hasReachedCriticalLevel() {
@@ -108,7 +97,7 @@ function getTotals(type){
             actionsList.push({
                 type: action,
                 cost,
-                timestamp: moment.startOf('ss').fromNow()
+                // timestamp: moment.startOf('ss').fromNow()
             });
         }
        
