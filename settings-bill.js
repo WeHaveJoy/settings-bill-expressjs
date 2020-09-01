@@ -1,5 +1,3 @@
-// var moment = require('moment');
-// moment().format();
 module.exports = function () {
 
     let theSettings;
@@ -32,15 +30,15 @@ module.exports = function () {
     }
 
     function hasReachedCriticalLevel() {
-        if(theSettings){
-              return totals() >= theSettings.criticalLevel;
+        if (theSettings) {
+            return totals() >= theSettings.criticalLevel;
+        }
     }
-}
     function hasReachedWarningLevel() {
-        if(theSettings){
-         return totals() >= theSettings.warningLevel && totals() < theSettings.criticalLevel;
+        if (theSettings) {
+            return totals() >= theSettings.warningLevel && totals() < theSettings.criticalLevel;
+        }
     }
-}
 
     function styleColor() {
         if (hasReachedCriticalLevel()) {
@@ -67,40 +65,40 @@ module.exports = function () {
     }
 
     function actionsFor(type) {
-                return actionsList.filter((action) => action.type === type);
-            }
-        
-function actions(){
-    return actionsList;
-}
-
-function getTotals(type){
-    let total = 0;
-    for(var i= 0; i< actionsList.length; i++){
-        if(actionsList[i].type == type){
-            total += actionsList[i].cost;
-        }
+        return actionsList.filter((action) => action.type === type);
     }
-    return total;
 
-}
+    function actions() {
+        return actionsList;
+    }
+
+    function getTotals(type) {
+        let total = 0;
+        for (var i = 0; i < actionsList.length; i++) {
+            if (actionsList[i].type == type) {
+                total += actionsList[i].cost;
+            }
+        }
+        return total;
+
+    }
 
     function recordAction(action) {
-        if(!hasReachedCriticalLevel()){
+        if (!hasReachedCriticalLevel()) {
             let cost = 0;
             if (action === 'call') {
                 cost = Number(theSettings.callCost);
             } else if (action === 'sms') {
                 cost = Number(theSettings.smsCost);
             }
-    
+
             actionsList.push({
                 type: action,
                 cost,
-                // timestamp: moment.startOf('ss').fromNow()
+                timestamp: new Date()
             });
         }
-       
+
     }
 
     return {
@@ -115,6 +113,6 @@ function getTotals(type){
         styleColor,
         actionsFor,
         actions,
-    getTotals
+        getTotals
     }
 }

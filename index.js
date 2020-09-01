@@ -2,13 +2,15 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const SettingsBill = require('./settings-bill');
+var moment = require('moment');
+moment().format();
 
 const app = express();
 const billSettings = SettingsBill();
 
-app.engine('handlebars', exphbs({ 
+app.engine('handlebars', exphbs({
     defaultLayout: 'main',
-    layoutsDir : "./views/layouts" 
+    layoutsDir: "./views/layouts"
 }));
 
 app.set('view engine', 'handlebars');
@@ -23,10 +25,11 @@ app.use(bodyParser.json())
 app.get('/', function (req, res) {
     res.render('index', {
         settings: billSettings.getSettings(),
-        totals: billSettings.totals(),
-        totalCallCost: billSettings.getTotalCallCost(),
-        totalSmsCost: billSettings.getTotalSmsCost(),
-        totalStyle: billSettings.styleColor()
+        totals: billSettings.totals().toFixed(2),
+        totalCallCost: billSettings.getTotalCallCost().toFixed(2),
+        totalSmsCost: billSettings.getTotalSmsCost().toFixed(2),
+        totalStyle: billSettings.styleColor(),
+        // moment: billSettings.moment(item.timestamp).fromNow()
 
 
     });
@@ -52,15 +55,27 @@ app.post('/action', function (req, res) {
 });
 
 app.get('/actions', function (req, res) {
-    res.render('actions', { actions: billSettings.actions() });
+    const listActions = billSettings.actions();
+    for(action of listActions){
+        action.prettyDate = moment(action.timestamp).fromNow();
+    }
+    res.render('actions', { actions: listActions });
+
 });
 
 app.get('/actions/:actiontype', function (req, res) {
-    
+
     const actionType = req.params.actiontype;
-    // console.log(actionType);
-    res.render('actions', { actions: billSettings.actionsFor(actionType) });
+
+    const listActions = billSettings.actionsFor(actionType);
+    
+    for(action of listActions){
+        action.prettyDate = moment(action.timestamp).fromNow();
+    }
+    res.render('actions', { actions: listActions });
 });
+
+
 
 const PORT = process.env.PORT || 3011
 app.listen(PORT, function () {
