@@ -56,7 +56,7 @@ app.post('/action', function (req, res) {
 
 app.get('/actions', function (req, res) {
     const listActions = billSettings.actions();
-    for(action of listActions){
+    for (action of listActions) {
         action.prettyDate = moment(action.timestamp).fromNow();
     }
     res.render('actions', { actions: listActions });
@@ -68,8 +68,8 @@ app.get('/actions/:actiontype', function (req, res) {
     const actionType = req.params.actiontype;
 
     const listActions = billSettings.actionsFor(actionType);
-    
-    for(action of listActions){
+
+    for (action of listActions) {
         action.prettyDate = moment(action.timestamp).fromNow();
     }
     res.render('actions', { actions: listActions });
